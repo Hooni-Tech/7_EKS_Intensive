@@ -1,0 +1,6 @@
+EKS 버전 관리가 필요한 리소스
+- Cluster : 버전 관리에 있어 가장 중심
+- API: Cluster 변경에 따른 API
+- Worker Node: Cluster 버전에 맞는 AMI
+- Addon: kube-proxy, coredns, vpc-cni, 사용자 설치 addon 등
+- kubectl: laptop 에 설치 된 client kubectl
