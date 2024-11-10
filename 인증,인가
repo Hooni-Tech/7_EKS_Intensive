@@ -1,0 +1,74 @@
+홍길동 > A 정보에 접근한다고 가정
+
+1. 인증
+ㄴ 홍길동이란 신원 확인 과정
+
+2. 인가
+ㄴ 홍길동이란 사람이 A 정보에 대한 접근 권한이 있는지 확인
+
+
+cluster role 에서 admin 역할을 할 수 있는 권한을 만든다, 그리고 Cluste role binding 을 통해서 권한을 부여한다 (사용자에게 admin 권한을 맵핑)
+
+[Cluster Role]
+$ k get clusterrole/cluster-admin -o yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  annotations:
+    rbac.authorization.kubernetes.io/autoupdate: "true"
+  creationTimestamp: "2024-10-30T14:08:51Z"
+  labels:
+    kubernetes.io/bootstrapping: rbac-defaults
+  name: cluster-admin
+  resourceVersion: "83"
+  uid: 92289ca0-7e7f-4e2a-9912-202af9c6be83
+rules:
+- apiGroups:
+  - '*'
+  resources:
+  - '*'
+  verbs:
+  - '*'
+- nonResourceURLs:
+  - '*'
+  verbs:
+  - '*'
+
+
+[Clusterolebinding]
+$ k get clusterrolebinding/cluster-admin -o yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  annotations:
+    rbac.authorization.kubernetes.io/autoupdate: "true"
+  creationTimestamp: "2024-10-30T14:08:52Z"
+  labels:
+    kubernetes.io/bootstrapping: rbac-defaults
+  name: cluster-admin
+  resourceVersion: "145"
+  uid: c1d7c0c9-7626-42d5-9607-1588f829c3bd
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: system:masters
+
+
+[AWS(EKS) kubernetes 인증]
+AWS(EKS) <> K8S 사이에서는 aws iam authenticator (aws-auth config map) 가 있어 인증을 도와줌
+
+[AWS IAM K8s Role 연결]
+AWS IAM User/Role
+        |
+AWS Auth-configmap
+        |
+User/Group
+        |
+Cluster Role binding
+        |
+Cluster Role
+
