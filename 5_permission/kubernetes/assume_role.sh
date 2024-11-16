@@ -7,7 +7,7 @@ if [[ "${ROLE_ARN}x" == "x" ]]; then
     exit 1
 fi
 
-CRED="$(aws sts assume-role --role-arn $1 --role-session-name facam-handson --output text | grep CREDENTIALS)"
+CRED="$(aws sts assume-role --role-arn $1 --role-session-name mhoonkim-eks --output text | grep CREDENTIALS)"
 
 access_key="$(echo $CRED | awk '{print $2}')"
 secret_access="$(echo $CRED | awk '{print $4}')"

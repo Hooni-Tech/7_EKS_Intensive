@@ -5,16 +5,16 @@ metadata:
   namespace: kube-system
 data:
   mapRoles: |
-    - rolearn: <YOUR NODE GROUP ARN>
+    - rolearn: arn:aws:iam::582282256496:role/eks-node-group
       username: system:node:{{EC2PrivateDNSName}}
       groups:
       - system:bootstrappers
       - system:nodes
-    - rolearn: <DEVOPS ROLE ARN>
+    - rolearn: arn:aws:iam::582282256496:role/mh-devops
       username: devops
       groups:
         - system:masters
-    - rolearn: <DEVELOPER ROLE ARN>
+    - rolearn: arn:aws:iam::582282256496:role/mh-developer
       username: developer
       groups:
-        - aws:iam-developer-role
+        - aws:iam-mh-developer-role
